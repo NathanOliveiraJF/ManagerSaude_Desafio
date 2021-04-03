@@ -3,6 +3,7 @@ import { BrowserRouter, Route ,Switch } from "react-router-dom";
 
 import Home from './pages/Home';
 import Album from './pages/Album';
+import ConsultarAlbum from './components/consultarAlbum';
 
 export default function Routes() {
   return (
@@ -10,6 +11,7 @@ export default function Routes() {
       <Switch>
         <Route path="/" exact  component={Home}/>
         <Route path="/albuns"  component={Album}/>
+        <Route path="/album/consultar/:id"  component={ConsultarAlbum}/>
       </Switch>
     </BrowserRouter>
   );
