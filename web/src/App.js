@@ -1,6 +1,16 @@
+import React from "react";
+import Routes from "./routes";
+import "./global.css";
+import "./styles/styles.css";
+import MenuBar from "./components/menubar";
+
+
 function App() {
   return (
-   <h1>Album</h1>
+    <div className="container">
+      <MenuBar />
+      <Routes />
+    </div>
   );
 }
 
