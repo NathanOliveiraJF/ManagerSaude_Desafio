@@ -1,0 +1,6 @@
+@import url('/src/styles/button.css');
+
+.text-green {
+  color: var(--green);
+}
+

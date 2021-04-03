@@ -1,0 +1,10 @@
+.btn-create {
+  background: var(--green);
+  color: var(--white);
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.btn-create:hover {
+  background: var(--green-200);
+}
