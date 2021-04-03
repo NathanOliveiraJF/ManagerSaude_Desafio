@@ -37,6 +37,8 @@ namespace AlbumApplication
 
             services.AddDbContext<AlbumApplicationContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("AlbumApplicationContext")));
+            
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +50,11 @@ namespace AlbumApplication
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AlbumApplication v1"));
             }
+
+            app.UseCors(x => x
+              .AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader());
 
             app.UseHttpsRedirection();
 
