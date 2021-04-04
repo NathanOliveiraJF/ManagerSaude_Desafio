@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import vazioImg from "../../assets/imagem_album_vazio.svg";
 import albumImg from "../../assets/imagem_album.svg";
 import iconArrow from "../../assets/icon_arrow-down.svg";
-import Layout from '../../components/layout';
+import Layout from "../../components/layout";
 import api from "../../Api";
 
 function Album() {
@@ -47,47 +48,54 @@ function Album() {
 
       {loading && <p>Loading...</p>}
       {!loading && (
-        <div className="row justify-content-center">
+        <div className="row justify-content-center mt-5">
           <div className="col">
-            <table className="table mt-4">
-              <thead>
-                <tr>
-                  <th scope="col">Nome</th>
-                  <th scope="col">Data de Lançamento</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {albuns.map((x) => {
-                  return (
-                    <tr key={x.albumId}>
-                      <td>{x.nome}</td>
-                      <td>{x.anoLancamento}</td>
-                      <td>
-                        <a
-                          href={`/album/consultar/${x.albumId}`}
-                          className="btn btn-outline-dark"
-                        >
-                          Consultar
-                        </a>
-                        <a
-                          href={`/album/alterar/${x.albumId}`}
-                          className="btn btn-outline-dark mx-3"
-                        >
-                          Alterar
-                        </a>
-                        <a
-                          href={`/album/editar/${x.albumId}`}
-                          className="btn btn-outline-dark"
-                        >
-                          Editar
-                        </a>
-                      </td>
+            <div className="card">
+              <div className="card-header">
+                <strong className="card-title">Albuns</strong>
+              </div>
+              <div className="card-body">
+                <table className="table table-striped table-bordered mt-4">
+                  <thead>
+                    <tr>
+                      <th scope="col">Nome</th>
+                      <th scope="col">Data de Lançamento</th>
+                      <th></th>
                     </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                  </thead>
+                  <tbody>
+                    {albuns.map((x) => {
+                      return (
+                        <tr key={x.albumId}>
+                          <td>{x.nome}</td>
+                          <td>{x.anoLancamento}</td>
+                          <td>
+                            <Link
+                              to={`/album/consultar/${x.albumId}`}
+                              className="btn btn-outline-dark"
+                            >
+                              Consultar
+                            </Link>
+                            <Link
+                              to={`/album/alterar/${x.albumId}`}
+                              className="btn btn-outline-dark mx-3"
+                            >
+                              Alterar
+                            </Link>
+                            <Link
+                              to={`/album/editar/${x.albumId}`}
+                              className="btn btn-outline-dark"
+                            >
+                              Excluir
+                            </Link>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       )}

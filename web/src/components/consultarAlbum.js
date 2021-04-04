@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import Musica from "./musica";
 import api from "./../Api";
+import Layout from "./layout";
+import albumImg from "../assets/imagem_album.svg";
+import consultImg from "../assets/imagem_consultando_music.svg";
 
 function ConsultarAlbum(props) {
   const [album, setAlbum] = useState({});
-
+  const [loading, setLoading] = useState(true);
+  const history = useHistory();
   useEffect(() => {
     async function fechData() {
       try {
@@ -12,6 +17,7 @@ function ConsultarAlbum(props) {
           `https://localhost:44351/api/Album/${props.match.params.id}`
         );
         setAlbum(response.data);
+        setLoading(false);
       } catch (err) {
         console.log("error" + err);
       }
@@ -22,33 +28,47 @@ function ConsultarAlbum(props) {
   console.log(album);
 
   return (
-    <div className="row w-25">
-      <div className="col-md-6">
-        <div className="card border-0">
-          <p className="card-title">Consultando album</p>
-          <div className="card-body">
-            <div className="row g-3">
-              <div className="col-auto">
-                <label className="col-form=label">Album</label>
-              </div>
-              <div className="col-auto">
-                <span className="form-text text-dark">{album.nome}</span>
-              </div>
-              <div className="col-auto ps-4">
-                <label className="col-form=label">Ano Lançamento</label>
-              </div>
-              <div className="col-auto">
-                <span className="form-text">{album.anoLancamento}</span>
-              </div>
+    <Layout>
+      {loading && <p>Loading...</p>}
+      {!loading && (
+        <>
+          <div className="row mt-3 align-items-center">
+            <div className="col-md-4">
+              <h1 className="text-green w-25">Consultando Album</h1>
+              <p className="fs-5 mt-4">
+                Consultando Album{" "}
+                <span className="text-green">{album.nome} </span>
+                Lançado em{" "}
+                <span className="text-green">{album.anoLancamento}</span>
+              </p>
+
+              <button
+                onClick={() => {
+                  history.push("/albuns");
+                }}
+                className="btn-create rounded-pill btn-lg border-0 px-4"
+              >
+                Voltar para Albuns
+              </button>
             </div>
-            
-            {/* <div className="col-md-6 mt-5">
-              <Musica musicas={album.musicas} />
-            </div> */}
+            <div className="col-md-3">
+              <img
+                src={consultImg}
+                alt="imagem consultando"
+                width="778"
+                height="369"
+              />
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+          <div className="row mt-5">
+            <div className="col-md-11">
+              <h2 className="text-green w-25 mb-4">Músicas</h2>
+              <Musica musicas={album.musicas}  />
+            </div>
+          </div>
+        </>
+      )}
+    </Layout>
   );
 }
 
