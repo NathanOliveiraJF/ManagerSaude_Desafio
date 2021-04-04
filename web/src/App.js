@@ -8,7 +8,6 @@ import MenuBar from "./components/menubar";
 function App() {
   return (
     <div className="container">
-      <MenuBar />
       <Routes />
     </div>
   );

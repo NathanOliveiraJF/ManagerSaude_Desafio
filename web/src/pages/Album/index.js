@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import vazioImg from "../../assets/imagem_album_vazio.svg";
 import albumImg from "../../assets/imagem_album.svg";
 import iconArrow from "../../assets/icon_arrow-down.svg";
-
+import Layout from '../../components/layout';
 import api from "../../Api";
 
 function Album() {
@@ -23,7 +23,7 @@ function Album() {
   }, []);
 
   return (
-    <>
+    <Layout>
       <div className="row mt-3 align-items-center">
         <div className="col-md-4">
           <h1 className="text-green">Album</h1>
@@ -91,7 +91,7 @@ function Album() {
           </div>
         </div>
       )}
-    </>
+    </Layout>
   );
 }
 export default Album;
