@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import vazioImg from "../../assets/imagem_album_vazio.svg";
 import albumImg from "../../assets/imagem_album.svg";
 import iconArrow from "../../assets/icon_arrow-down.svg";
@@ -9,6 +9,8 @@ import api from "../../Api";
 function Album() {
   const [albuns, setAlbuns] = useState([]);
   const [loading, setLoading] = useState(true);
+  const history = useHistory();
+
   async function fechData() {
     try {
       const response = await api.get("https://localhost:44351/api/Album");
@@ -29,6 +31,7 @@ function Album() {
         <div className="col-md-4">
           <h1 className="text-green">Album</h1>
           <p className="fs-5 mt-4">Aqui estão todos os seus albuns.</p>
+
           <div class="input-group mb-3">
             <label for="search">
               <img
@@ -40,7 +43,16 @@ function Album() {
             </label>
             <input type="text" class="form-control" id="search" />
           </div>
+          <button
+            onClick={() => {
+              history.push("/album/novo");
+            }}
+            className="btn-create rounded-pill btn-lg border-0 px-4"
+          >
+            Criar Album
+          </button>
         </div>
+
         <div className="col-md-3">
           <img src={albumImg} alt="imagem inicio" width="778" height="369" />
         </div>
