@@ -14,7 +14,7 @@ function ConsultarAlbum(props) {
     async function fechData() {
       try {
         const response = await api.get(
-          `https://localhost:44351/api/Album/${props.match.params.id}`
+          `/api/Album/${props.match.params.id}`
         );
         setAlbum(response.data);
         setLoading(false);
@@ -25,7 +25,6 @@ function ConsultarAlbum(props) {
     fechData();
   }, [props]);
 
-  console.log(album);
 
   return (
     <Layout>

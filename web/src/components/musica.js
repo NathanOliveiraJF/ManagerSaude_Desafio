@@ -1,7 +1,6 @@
 import React from "react";
 
 function Musica(props) {
-  console.log(props.musicas);
   return (
     <div className="card">
       <div className="card-header">
@@ -19,7 +18,7 @@ function Musica(props) {
           <tbody>
             {props.musicas.map((x, index) => {
               return (
-                <tr key={x.musicaId}>
+                <tr key={index}>
                   <th scope="col">{index}</th>
                   <td>{x.nome}</td>
                   <td>{x.duracao}</td>

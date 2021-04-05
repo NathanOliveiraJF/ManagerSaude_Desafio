@@ -13,7 +13,7 @@ function Album() {
 
   async function fechData() {
     try {
-      const response = await api.get("https://localhost:44351/api/Album");
+      const response = await api.get("/api/Album");
       setAlbuns(response.data);
       setLoading(false);
     } catch (err) {
@@ -23,7 +23,7 @@ function Album() {
 
   useEffect(() => {
     fechData();
-  }, []);
+  },[]);
 
   return (
     <Layout>
@@ -32,17 +32,7 @@ function Album() {
           <h1 className="text-green">Album</h1>
           <p className="fs-5 mt-4">Aqui estão todos os seus albuns.</p>
 
-          <div class="input-group mb-3">
-            <label for="search">
-              <img
-                src={iconArrow}
-                alt="imagem inicio"
-                className="img-search rounded btn-lg border-0 px-4"
-                id="inputGroupFile03"
-              />
-            </label>
-            <input type="text" class="form-control" id="search" />
-          </div>
+          
           <button
             onClick={() => {
               history.push("/album/novo");
@@ -71,7 +61,7 @@ function Album() {
                   <thead>
                     <tr>
                       <th scope="col">Nome</th>
-                      <th scope="col">Data de Lançamento</th>
+                      <th scope="col">Ano de Lançamento</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -95,8 +85,8 @@ function Album() {
                               Alterar
                             </Link>
                             <Link
-                              to={`/album/editar/${x.albumId}`}
-                              className="btn btn-outline-dark"
+                              to={`/album/excluir/${x.albumId}`}
+                              className="btn btn-outline-dark mx-3"
                             >
                               Excluir
                             </Link>

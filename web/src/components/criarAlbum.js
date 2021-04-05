@@ -1,15 +1,62 @@
 import React, { useState } from "react";
 import Layout from "./layout";
 import useForm from "./../hooks/useForm";
+import api from "./../Api";
+import { useHistory } from "react-router";
+import Musica from "./musica";
 
+const campos = {
+  album: "",
+  anoLancamento: "",
+  musica: "",
+  duracao: "",
+  musicas: [],
+};
 
 function CriarAlbum() {
-  const { propriedade, handleChange } = useForm({});
+  const { propriedade, handleChange } = useForm(campos);
   const [albumCriado, setAlbumCriado] = useState(false);
-  function salvar(e) {
+  const [musicaCriado, setMusicaCriado] = useState(false);
+
+  const [album, setAlbum] = useState({});
+  const [concluido, setConcluido] = useState(false);
+  const history = useHistory();
+  function salvarAlbum(e) {
     e.preventDefault();
-    console.log(propriedade);
+    console.log(propriedade.album);
+    console.log(propriedade.anoLancamento);
     setAlbumCriado(true);
+  }
+
+  function salvarMusica(e) {
+    e.preventDefault();
+
+    propriedade.musicas.push({
+      nome: propriedade.musica,
+      duracao: propriedade.duracao,
+    });
+
+    setAlbum({
+      nome: propriedade.album,
+      anoLancamento: propriedade.anoLancamento,
+      musicas: propriedade.musicas,
+    });
+
+    setMusicaCriado(true);
+    setConcluido(true);
+  }
+
+  async function salvar(e) {
+    e.preventDefault();
+
+    try {
+      const response = await api.post("/api/Album", album);
+      setAlbum(response.data);
+     
+      history.push("/albuns");
+    } catch (err) {
+      console.log("falhou ao salvar");
+    }
   }
 
   return (
@@ -28,7 +75,7 @@ function CriarAlbum() {
                   type="text"
                   className="form-control"
                   id="album-name"
-                  name="nome"
+                  name="album"
                   // value={propriedade.nome}
 
                   onChange={handleChange}
@@ -36,27 +83,28 @@ function CriarAlbum() {
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="album-date" className="text-green">
-                  <strong>Data de lançamento</strong>
+                <label htmlFor="album-time" className="text-green">
+                  <strong>Ano de lançamento</strong>
                 </label>
                 <input
-                  type="date"
-                  name="data"
+                  type="text"
                   className="form-control"
-                  id="album-date"
-                  // value={propriedade.data}
+                  id="album-time"
+                  name="anoLancamento"
+                  // value={propriedade.nome}
 
                   onChange={handleChange}
+                  placeholder="Ano de lançamento"
                 />
               </div>
               <button
                 type="button"
                 className="btn-create rounded-pill btn-lg border-0 px-4"
                 onClick={(e) => {
-                  salvar(e);
+                  salvarAlbum(e);
                 }}
               >
-                Cadastrar
+                Cadastrar Album
               </button>
             </form>
           </div>
@@ -65,6 +113,11 @@ function CriarAlbum() {
 
       {albumCriado && (
         <div className="row mt-4">
+          {concluido && (
+            <div className="alert alert-success" role="alert">
+             Musica Cadastrada!
+            </div>
+          )}
           <h2 className="h4">Criar Música</h2>
           <div className="col-md-6 border rounded shadow-lg p-5">
             <form className="mt">
@@ -76,9 +129,7 @@ function CriarAlbum() {
                   type="text"
                   className="form-control"
                   id="music-name"
-                  name="nome"
-                  // value={propriedade.nome}
-
+                  name="musica"
                   onChange={handleChange}
                   placeholder="nome da música"
                 />
@@ -91,23 +142,38 @@ function CriarAlbum() {
                   type="time"
                   className="form-control"
                   id="music-time"
-                  name="tempo"
-                  // value={propriedade.nome}
-
+                  name="duracao"
                   onChange={handleChange}
-                  // placeholder="nome da música"
                 />
               </div>
               <button
                 type="button"
                 className="btn-create rounded-pill btn-lg border-0 px-4"
                 onClick={(e) => {
+                  salvarMusica(e);
+                }}
+              >
+                Cadastrar Musica
+              </button>
+              <button
+                type="button"
+                className="btn-create rounded-pill btn-lg border-0 px-4 ms-3"
+                onClick={(e) => {
                   salvar(e);
                 }}
               >
-                Cadastrar
+                Concluir
               </button>
             </form>
+          </div>
+        </div>
+      )}
+
+      {musicaCriado && (
+        <div className="row mt-5">
+          <div className="col-md-11">
+            <h2 className="text-green w-25 mb-4">Músicas</h2>
+            <Musica musicas={album.musicas} />
           </div>
         </div>
       )}
