@@ -141,36 +141,7 @@ namespace AlbumApplication.Controllers
             return CreatedAtAction("GetAlbum", new { id = album.AlbumId }, album);
         }
 
-        // POST: api/album/1/musica
-        [HttpPost("{albumId}/Musica")]
-        public async Task<IActionResult> PostMusica(string albumId, Musica musica)
-        {
-            var album = _context.Album.Where(x => x.AlbumId == albumId ).FirstOrDefault();
-            if(album == null)
-            {
-                return NotFound();
-            }
-             musica.AlbumId = album.AlbumId;
-             _context.Musica.Add(musica);
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (AlbumExists(musica.AlbumId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetAlbum", new { id = album.AlbumId }, album);
-        }
+       
 
         // DELETE: api/Album/5
         [HttpDelete("{id}")]
@@ -187,7 +158,21 @@ namespace AlbumApplication.Controllers
 
             return NoContent();
         }
+        // DELETE: api/Album/Musica/5
+        [HttpDelete("musica/{id}")]
+        public async Task<IActionResult> DeleteMusica(string id)
+        {
+            var musica = await _context.Musica.FindAsync(id);
+            if (musica == null)
+            {
+                return NotFound();
+            }
 
+            _context.Musica.Remove(musica);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
         private bool AlbumExists(string id)
         {
             return _context.Album.Any(e => e.AlbumId == id);

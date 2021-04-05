@@ -6,7 +6,7 @@ namespace AlbumDomain.Models
 {
     public class Musica
     {
-        public Musica(string musicaId, string albumId, string nome, double duracao)
+        public Musica(string musicaId, string albumId, string nome, string duracao)
         {
             MusicaId = musicaId;
             AlbumId = albumId;
@@ -21,6 +21,6 @@ namespace AlbumDomain.Models
         public string MusicaId { get;  set; }
         public string AlbumId { get;  set; }
         public string Nome { get; set; }
-        public double Duracao { get; set; }
+        public string Duracao { get; set; }
     }
 }

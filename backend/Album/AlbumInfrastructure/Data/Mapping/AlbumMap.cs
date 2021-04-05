@@ -24,8 +24,8 @@ namespace AlbumInfrastructure.Data.Mapping
                 .IsRequired();
 
             builder.Property(x => x.AnoLancamento)
-                .HasColumnType("datetime2")
-                .IsRequired();
+                 .HasColumnType("nvarchar(4)")
+                 .IsRequired();
         }
     }
 }

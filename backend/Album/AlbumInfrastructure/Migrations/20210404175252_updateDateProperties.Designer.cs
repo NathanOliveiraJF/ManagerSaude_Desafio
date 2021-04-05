@@ -3,14 +3,16 @@ using AlbumInfrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AlbumInfrastructure.Migrations
 {
     [DbContext(typeof(AlbumApplicationContext))]
-    partial class AlbumApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20210404175252_updateDateProperties")]
+    partial class updateDateProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
